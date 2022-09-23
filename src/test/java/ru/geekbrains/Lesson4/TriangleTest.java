@@ -1,12 +1,10 @@
-package ru.geekbrains;
+package ru.geekbrains.Lesson4;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import static ru.geekbrains.Triangle.areaTriangle;
+import static ru.geekbrains.Lesson4.Triangle.areaTriangle;
 
 public class TriangleTest  {
 

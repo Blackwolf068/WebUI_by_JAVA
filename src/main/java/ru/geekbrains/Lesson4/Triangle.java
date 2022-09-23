@@ -1,4 +1,4 @@
-package ru.geekbrains;
+package ru.geekbrains.Lesson4;
 
 public class Triangle {
     public static float areaTriangle(int a, int b, int c) throws TriangleIsNotAvailable {
