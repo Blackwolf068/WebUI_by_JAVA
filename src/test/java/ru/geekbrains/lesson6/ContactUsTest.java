@@ -1,6 +1,8 @@
 package ru.geekbrains.lesson6;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import ru.geekbrains.lesson7.AdditionalLogger;
 
-public class ShopTest {
+@Story("Работа с формой обратной связи")
+public class ContactUsTest {
     WebDriver driver;
 
     @BeforeAll
@@ -19,9 +27,9 @@ public class ShopTest {
 
     @BeforeEach
     void initDriver() {
-        driver = new ChromeDriver();
+        driver = new EventFiringDecorator(new AdditionalLogger()).decorate(new ChromeDriver());
         driver.manage().window().setSize(new Dimension(1800, 1000));
-        driver.get("http://automationpractice.com/index.php");
+        driver.get(System.getenv("BASE_URL"));
     }
 
     @Test
@@ -50,6 +58,10 @@ public class ShopTest {
 
     @AfterEach
     void tearDown() {
+        LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
+        for (LogEntry log: logs) {
+            Allure.step("Элемент лога браузера: " + log.getMessage());
+        }
         driver.quit();
     }
 }
